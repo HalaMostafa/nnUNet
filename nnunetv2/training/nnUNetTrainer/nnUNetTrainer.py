@@ -744,8 +744,7 @@ class nnUNetTrainer(object):
                 p_rotation=0.2,
                 rotation=rotation_for_DA, p_scaling=0.2, scaling=(0.7, 1.4), p_synchronize_scaling_across_axes=1,
                 bg_style_seg_sampling=False,
-                border_mode_seg='constant',
-                padding_value_seg=-1,
+                border_mode_seg='zeros',
             )
         )
 

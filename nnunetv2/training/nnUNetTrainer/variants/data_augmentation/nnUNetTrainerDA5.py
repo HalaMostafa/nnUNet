@@ -162,12 +162,11 @@ class nnUNetTrainerDA5(nnUNetTrainer):
             SpatialTransform(
                 patch_size_spatial, patch_center_dist_from_border=0, random_crop=False,
                 p_elastic_deform=0,
-                p_rotation=0.4, rotation=rotation_for_DA, p_rot_per_axis=0.5,
+                p_rotation=0.4, rotation=rotation_for_DA,
                 p_scaling=0.2, scaling=(0.7, 1.43),
                 p_synchronize_scaling_across_axes=0,
                 bg_style_seg_sampling=False,
-                border_mode_seg='constant',
-                padding_value_seg=-1,
+                border_mode_seg='zeros',
             )
         )
 
@@ -211,7 +210,7 @@ class nnUNetTrainerDA5(nnUNetTrainer):
         ))
 
         transforms.append(RandomTransform(
-            BrightnessAdditiveTransform(mu=0, sigma=0.5, synchronize_channels=False, p_per_channel=0.5),
+            BrightnessAdditiveTransform(mu=0, sigma=0.5, per_channel=False, p_per_channel=0.5),
             apply_probability=0.1
         ))
 
@@ -365,14 +364,12 @@ class nnUNetTrainerDA5ord0(nnUNetTrainerDA5):
         ret.transforms[sp_idx[0]] = SpatialTransform(
             patch_size_spatial, patch_center_dist_from_border=0, random_crop=False,
             p_elastic_deform=0,
-            p_rotation=0.4, rotation=rotation_for_DA, p_rot_per_axis=0.5,
+            p_rotation=0.4, rotation=rotation_for_DA,
             p_scaling=0.2, scaling=(0.7, 1.43),
             p_synchronize_scaling_across_axes=0,
             bg_style_seg_sampling=False,
-            border_mode_seg='constant',
-            padding_value_seg=-1,
-            mode_image='nearest',
-            mode_seg='nearest',
+            border_mode_seg='zeros',
+            mode_seg='bilinear',
         )
         return ret
 
@@ -430,13 +427,12 @@ class nnUNetTrainerDA5Segord0(nnUNetTrainerDA5):
         ret.transforms[sp_idx[0]] = SpatialTransform(
             patch_size_spatial, patch_center_dist_from_border=0, random_crop=False,
             p_elastic_deform=0,
-            p_rotation=0.4, rotation=rotation_for_DA, p_rot_per_axis=0.5,
+            p_rotation=0.4, rotation=rotation_for_DA,
             p_scaling=0.2, scaling=(0.7, 1.43),
             p_synchronize_scaling_across_axes=0,
             bg_style_seg_sampling=False,
-            border_mode_seg='constant',
-            padding_value_seg=-1,
-            mode_seg='nearest'
+            border_mode_seg='zeros',
+            mode_seg='bilinear'
         )
         return ret
 
